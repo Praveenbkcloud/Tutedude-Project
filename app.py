@@ -23,6 +23,10 @@ def get_data():
 def index():
     return render_template('index.html')
 
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
+
 # Form Submission
 @app.route('/submit', methods=['POST'])
 def submit():
