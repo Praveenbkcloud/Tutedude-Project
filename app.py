@@ -10,6 +10,7 @@ MONGO_URI = "mongodb+srv://praveenbkcloud_db_user:I3w23NbYOPUNUPGj@flaskproject.
 client = MongoClient(MONGO_URI)
 db = client["studentdb"]
 collection = db["students"]
+todo_collection = db["todoitems"]
 
 # API Route
 @app.route('/api')
@@ -26,6 +27,19 @@ def index():
 @app.route('/todo')
 def todo():
     return render_template('todo.html')
+
+@app.route('/submittodoitem', methods=['POST'])
+def submit_todo():
+
+    item_name = request.form['itemName']
+    item_description = request.form['itemDescription']
+
+    todo_collection.insert_one({
+        "itemName": item_name,
+        "itemDescription": item_description
+    })
+
+    return "Todo Item Saved Successfully"
 
 # Form Submission
 @app.route('/submit', methods=['POST'])
